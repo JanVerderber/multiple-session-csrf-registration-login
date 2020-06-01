@@ -1,0 +1,6 @@
+Flask
+pytest
+bcrypt
+requests
+bleach
+Flask-SQLAlchemy

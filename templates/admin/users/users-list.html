@@ -1,0 +1,37 @@
+{% extends "/public/base.html" %}
+
+{% block title %}Users list{% endblock title %}
+
+{% block content %}
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+            </div>
+
+            <div class="col-6">
+                <p>{{ login_message }}</p><br>
+
+                <h1 class="display-4">Users list</h1>
+
+                <ul>
+                    {% for user in users %}
+                        <li>User ID: {{ user.user_id }}</li>
+                        <li>Username: {{ user.username }}</li>
+                        <br><br>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+            <div class="col">
+                <p>You are currently logged in as: <b>{{ current_user }}</b></p>
+                <form method="post" action="{{ url_for('profile.auth.logout') }}">
+                    <button class="btn btn-primary" type="submit">Logout</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}
