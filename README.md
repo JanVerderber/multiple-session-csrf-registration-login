@@ -16,11 +16,11 @@ to manually install these packages using this command: pip install -r requiremen
 If you are not using PyCharm to start the app, use this command: python app.py
 
 ## What does this app offer?
--Users can register with username and password (No e-mail)
--Users can login with username and password
--When users login, they see all the users registered and their ID
--Users can change their password using /change-password
--Multiple sessions so users can have more sessions (Login from different clients)
--CSRF protection
+- Users can register with username and password (No e-mail)
+- Users can login with username and password
+- When users login, they see all the users registered and their ID
+- Users can change their password using /change-password
+- Multiple sessions so users can have more sessions (Login from different clients)
+- CSRF protection
 
 
