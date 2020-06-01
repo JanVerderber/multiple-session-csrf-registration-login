@@ -7,6 +7,19 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+class Session(db.Model):
+    token_hash = db.Column(db.String())
+    ip = db.Column(db.String())
+    platform = db.Column(db.String())
+    browser = db.Column(db.String())
+    country = db.Column(db.String())
+    user_agent = db.Column(db.String())
+    expired = db.Column(db.String())
+
+class CSRFToken(db.Model):
+    token = db.Column(db.String())
+    expired = db.Column(db.DateTime)
+
 class User(db.Model):
     __tablename__ = 'user'
     user_id = db.Column(db.Integer, primary_key=True)
