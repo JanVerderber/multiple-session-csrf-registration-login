@@ -22,5 +22,6 @@ If you are not using PyCharm to start the app, use this command: python app.py
 - Users can change their password using /change-password
 - Multiple sessions so users can have more sessions (Login from different clients)
 - CSRF protection
+- The app checks session and CSRF tokens for expiration
 
 

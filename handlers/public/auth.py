@@ -1,11 +1,11 @@
 from flask import request, render_template
 
-from models.user import User
+from models.user import User, Session
 
 def registration(**params):
     if request.method == "GET":
         token = request.cookies.get('my-simple-app-session')
-        success, user, message = User.verify_session(token)
+        success, user, message = Session.verify_session(token)
 
         if success:
             return render_template("public/auth/logged_in.html", **params)

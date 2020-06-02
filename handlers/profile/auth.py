@@ -1,6 +1,6 @@
 import hashlib
 import bcrypt
-from models.user import User
+from models.user import User, Session, CSRFToken
 from flask import request, make_response, redirect, url_for, render_template
 
 def logout(**params):
@@ -10,7 +10,7 @@ def logout(**params):
         token = request.cookies.get('my-simple-app-session')
 
         # delete the session token from the User object
-        success, message = User.delete_session(token)
+        success, message = Session.delete_session(token)
 
         if success:
             # prepare the response
@@ -27,13 +27,12 @@ def logout(**params):
 def change_password(**params):
     if request.method == "GET":
         token = request.cookies.get('my-simple-app-session')
-        success, user, message = User.verify_session(token)
-        current_username = user.username
+        success, user, message = Session.verify_session(token)
 
-        csrf_token = User.generate_csrf_token(current_username)
+        csrf_token = CSRFToken.generate_csrf_token(user)
 
-        if success:
-            params["current_user"] = current_username
+        if success and csrf_token:
+            params["current_user"] = user
             params["csrf_token"] = csrf_token
             return render_template("public/auth/change_password.html", **params)
         else:
@@ -42,13 +41,13 @@ def change_password(**params):
 
     elif request.method == "POST":
         token = request.cookies.get('my-simple-app-session')
-        success, user, message = User.verify_session(token)
+        success, user, message = Session.verify_session(token)
 
         current_username = user.username
         current_password = request.form.get("current_password")
         new_password = request.form.get("new_password")
         form_csrf_token = request.form.get("csrf_token")
-        csrf_validation_success = User.validate_csrf_token(current_username, form_csrf_token)
+        csrf_validation_success = CSRFToken.validate_csrf_token(form_csrf_token)
 
         if current_username and current_password and new_password and csrf_validation_success:
             # checks if user with this username and password exists

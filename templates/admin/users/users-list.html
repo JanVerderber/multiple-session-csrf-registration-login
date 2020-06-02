@@ -25,7 +25,7 @@
             </div>
 
             <div class="col">
-                <p>You are currently logged in as: <b>{{ current_user }}</b></p>
+                <p>You are currently logged in as: <b>{{ current_user.username }}</b></p>
                 <form method="post" action="{{ url_for('profile.auth.logout') }}">
                     <button class="btn btn-primary" type="submit">Logout</button>
                 </form>
