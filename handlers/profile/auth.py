@@ -1,6 +1,7 @@
-import hashlib
 import bcrypt
-from models.user import User, Session, CSRFToken
+from models.user import User
+from models.session import Session
+from models.csrf import CSRFToken
 from flask import request, make_response, redirect, url_for, render_template
 
 def logout(**params):

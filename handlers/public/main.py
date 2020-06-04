@@ -1,6 +1,7 @@
 import bcrypt
 from flask import request, render_template, redirect, url_for, make_response
-from models.user import User, Session
+from models.user import User
+from models.session import Session
 
 def login(**params):
     if request.method == "GET":

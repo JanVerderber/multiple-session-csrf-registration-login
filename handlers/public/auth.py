@@ -1,6 +1,7 @@
 from flask import request, render_template
 
-from models.user import User, Session
+from models.user import User
+from models.session import Session
 
 def registration(**params):
     if request.method == "GET":

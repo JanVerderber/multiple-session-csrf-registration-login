@@ -1,4 +1,5 @@
-from models.user import User, Session
+from models.user import User
+from models.session import Session
 from flask import render_template, request
 
 def users_list(**params):

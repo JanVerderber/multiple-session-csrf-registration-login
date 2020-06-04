@@ -1,5 +1,5 @@
 from flask import Flask
-from models.user import db
+from database import db
 from handlers.admin import users
 from handlers.profile.auth import logout, change_password
 from handlers.public import main as public_main, auth
