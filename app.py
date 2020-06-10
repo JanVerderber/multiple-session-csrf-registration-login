@@ -19,10 +19,13 @@ app.add_url_rule(rule="/", endpoint="public.main.login", view_func=public_main.l
 # REGISTRATION
 app.add_url_rule(rule="/registration", endpoint="public.auth.registration", view_func=auth.registration, methods=["GET", "POST"])
 
+# EMAIL VERIFICATION
+app.add_url_rule(rule="/email-verification/<code>", endpoint="public.auth.email_verification", view_func=auth.email_verification, methods=["GET"])
 
-# PRIVATE URLS
 
-# USERS LIST (NEEDS TO BE LOGGED IN)
+# PRIVATE URLS (NEED TO BE LOGGED IN)
+
+# USERS LIST
 app.add_url_rule(rule="/admin/users", endpoint="admin.users.users_list", view_func=users.users_list,
                  methods=["GET"])
 

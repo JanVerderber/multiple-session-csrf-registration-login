@@ -3,6 +3,7 @@ import datetime
 from database import db
 from operator import attrgetter
 
+
 class CSRFToken(db.Model):
     __tablename__ = 'csrf_token'
     csrf_id = db.Column(db.Integer, primary_key=True)

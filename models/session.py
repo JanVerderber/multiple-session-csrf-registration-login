@@ -4,6 +4,7 @@ import datetime
 from database import db
 from flask import request
 
+
 class Session(db.Model):
     __tablename__ = 'session'
     session_id = db.Column(db.Integer, primary_key=True)
