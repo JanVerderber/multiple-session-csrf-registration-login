@@ -4,6 +4,7 @@ import datetime
 import hashlib
 import bcrypt
 from database import db
+from utils.email_helper import send_email
 
 
 class User(db.Model):
@@ -53,10 +54,7 @@ class User(db.Model):
             db.session.add(user)
             db.session.commit()
 
-            print("__________________________________________________________________________________________________")
-            print("Thank you for registering at our web app! Please verify your e-mail by clicking on the link below:")
-            print("http://127.0.0.1:5000/email-verification/" + code)
-            print("__________________________________________________________________________________________________")
+            send_email(user.email, email_params={"verification_code": code})
 
             return True
 

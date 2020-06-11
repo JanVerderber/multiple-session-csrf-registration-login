@@ -3,6 +3,7 @@ from database import db
 from handlers.admin import users
 from handlers.profile.auth import logout, change_password
 from handlers.public import main as public_main, auth
+from utils.environment import is_local
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app_database.db'
@@ -41,4 +42,7 @@ app.add_url_rule(rule="/change-password", endpoint="profile.auth.change_password
 # FOR RUNNING THE APP
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    if is_local():
+        app.run(port=8080, host="localhost", debug=True)  # localhost
+    else:
+        app.run(debug=False)  # production

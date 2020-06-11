@@ -24,7 +24,12 @@ def login(**params):
             # checks if user with this username and password exists
             user = User.query.filter_by(email=email).first()
 
-            if user and user.verification_code == "" and bcrypt.checkpw(password.encode("utf-8"), user.password.encode("utf-8")):
+            if user.verification_code != "":
+                message = "Please verify your e-mail, we've sent you instructions."
+                params["danger_message"] = message
+                return render_template("public/main/index.html", **params)
+
+            if user and bcrypt.checkpw(password.encode("utf-8"), user.password.encode("utf-8")):
                 token = Session.generate_session(user)
 
                 response = make_response(redirect(url_for("admin.users.users_list")))
