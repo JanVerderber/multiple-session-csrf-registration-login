@@ -54,7 +54,15 @@ class User(db.Model):
             db.session.add(user)
             db.session.commit()
 
-            send_email(user.email, email_params={"verification_code": code})
+            message = "_________________________________________________________________________________________" \
+                      "_________\n" \
+                      "Thank you for registering at our web app! Please verify your e-mail by clicking on the " \
+                      "link below:\n" \
+                      "http://localhost:8080/email-verification/" + code + "\n" \
+                      "________________________________________________________________________________________" \
+                                                                           "__________"
+
+            send_email(user.email, email_params={"message": message})
 
             return True
 
@@ -75,10 +83,12 @@ class User(db.Model):
                 db.session.add(user)
                 db.session.commit()
 
-                print("_________________________________________________________________________________")
-                print("Your e-mail has been confirmed! Thank you, you can now login with the link below:")
-                print("http://127.0.0.1:5000/")
-                print("_________________________________________________________________________________")
+                message = "_________________________________________________________________________________\n" \
+                          "Your e-mail has been confirmed! Thank you, you can now login with the link below:\n" \
+                          "http://localhost:8080/ \n" \
+                          "_________________________________________________________________________________"
+
+                send_email(user.email, email_params={"message": message})
 
                 return True, "Success"
             else:

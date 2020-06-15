@@ -2,7 +2,7 @@ import os
 
 
 def is_local():
-    if os.getenv('GAE_ENV', '').startswith('standard'):
+    if os.getenv('PROD_ENV', '').startswith('production'):
         return False
     else:
         return True
