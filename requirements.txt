@@ -4,3 +4,4 @@ bcrypt
 requests
 bleach
 Flask-SQLAlchemy
+psycopg2

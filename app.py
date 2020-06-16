@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from database import db
 from handlers.admin import users
@@ -6,7 +7,7 @@ from handlers.public import main as public_main, auth
 from utils.environment import is_local
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app_database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL", "sqlite:///app_database.db")
 db.init_app(app)
 
 with app.app_context():
