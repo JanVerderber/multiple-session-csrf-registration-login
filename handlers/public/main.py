@@ -21,21 +21,26 @@ def login(**params):
         password = request.form.get("password")
 
         if email and password:
-            # checks if user with this username and password exists
+            # checks if user with this email exists
             user = User.query.filter_by(email=email).first()
 
-            if user.verification_code != "":
-                message = "Please verify your e-mail, we've sent you instructions."
-                params["danger_message"] = message
-                return render_template("public/main/index.html", **params)
+            if user:
+                if user.verification_code != "":
+                    message = "Please verify your e-mail, we've sent you instructions."
+                    params["danger_message"] = message
+                    return render_template("public/main/index.html", **params)
 
-            if user and bcrypt.checkpw(password.encode("utf-8"), user.password.encode("utf-8")):
-                token = Session.generate_session(user)
+                if bcrypt.checkpw(password.encode("utf-8"), user.password.encode("utf-8")):
+                    token = Session.generate_session(user)
 
-                response = make_response(redirect(url_for("admin.users.users_list")))
-                response.set_cookie('my-simple-app-session', token)
+                    response = make_response(redirect(url_for("admin.users.users_list")))
+                    response.set_cookie('my-simple-app-session', token)
 
-                return response
+                    return response
+                else:
+                    message = "You entered wrong e-mail or password."
+                    params["danger_message"] = message
+                    return render_template("public/main/index.html", **params)
             else:
                 message = "You entered wrong e-mail or password."
                 params["danger_message"] = message
