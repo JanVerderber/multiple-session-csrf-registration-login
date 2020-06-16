@@ -4,6 +4,7 @@ import datetime
 import hashlib
 import bcrypt
 from database import db
+from flask import request
 from utils.email_helper import send_email
 
 
@@ -54,11 +55,13 @@ class User(db.Model):
             db.session.add(user)
             db.session.commit()
 
+            url = request.url_root
+
             message = "_________________________________________________________________________________________" \
                       "_________\n" \
                       "Thank you for registering at our web app! Please verify your e-mail by clicking on the " \
                       "link below:\n" \
-                      "http://localhost:8080/email-verification/" + code + "\n" \
+                      + url + "email-verification/" + code + "\n" \
                       "________________________________________________________________________________________" \
                                                                            "__________"
 
@@ -83,9 +86,11 @@ class User(db.Model):
                 db.session.add(user)
                 db.session.commit()
 
+                url = request.url_root
+
                 message = "_________________________________________________________________________________\n" \
                           "Your e-mail has been confirmed! Thank you, you can now login with the link below:\n" \
-                          "http://localhost:8080/ \n" \
+                          + url + "\n" \
                           "_________________________________________________________________________________"
 
                 send_email(user.email, email_params={"message": message})
