@@ -6,3 +6,4 @@ bleach
 Flask-SQLAlchemy
 psycopg2
 gunicorn
+flask-mail

@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask_mail import Mail, Message
 from database import db
 from handlers.admin import users
 from handlers.profile.auth import logout, change_password
@@ -9,6 +10,15 @@ from utils.environment import is_local
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL", "sqlite:///app_database.db")
 db.init_app(app)
+
+app.config['SECRET_KEY'] = 'top-secret!'
+app.config['MAIL_SERVER'] = 'smtp.sendgrid.net'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'apikey'
+app.config['MAIL_PASSWORD'] = os.environ.get('SendGrid-Mail')
+app.config['MAIL_DEFAULT_SENDER'] = 'janex1107@gmail.com'
+mail = Mail(app)
 
 with app.app_context():
     db.create_all()
