@@ -56,16 +56,20 @@ class User(db.Model):
             db.session.commit()
 
             url = request.url_root
+            complete_url = url + "email-verification/" + code
 
-            message = "_________________________________________________________________________________________" \
-                      "_________\n" \
-                      "Thank you for registering at our web app! Please verify your e-mail by clicking on the " \
-                      "link below:\n" \
-                      + url + "email-verification/" + code + "\n" \
-                      "________________________________________________________________________________________" \
-                                                                           "__________"
+            message_title = "Verify e-mail address - Moderately simple registration login"
 
-            send_email(user.email, email_params={"message": message})
+            message_body = "Thank you for registering at our web app! Please verify your e-mail by clicking on the " \
+                           "link below:\n" \
+                           + complete_url + "\n"
+
+            message_html = "<p>Thank you for registering at our web app! Please verify your e-mail by clicking on the" \
+                           "link below:<br> " \
+                           + "<a href='" + complete_url + "' target='_blank'>" + complete_url + "</a></p>"
+
+            send_email(email_params={"recipient_email": user.email, "message_title": message_title,
+                                     "message_body": message_body, "message_html": message_html})
 
             return True
 
@@ -88,12 +92,16 @@ class User(db.Model):
 
                 url = request.url_root
 
-                message = "_________________________________________________________________________________\n" \
-                          "Your e-mail has been confirmed! Thank you, you can now login with the link below:\n" \
-                          + url + "\n" \
-                          "_________________________________________________________________________________"
+                message_title = "E-mail address confirmed - Moderately simple registration login"
 
-                send_email(user.email, email_params={"message": message})
+                message_body = "Your e-mail has been confirmed! Thank you, you can now login with the link below:\n" \
+                               + url + "\n"
+
+                message_html = "<p>Your e-mail has been confirmed! Thank you, you can now login with the link below:" \
+                               "<br><a href='" + url + "' target='_blank'>" + url + "</a></p>"
+
+                send_email(email_params={"recipient_email": user.email, "message_title": message_title,
+                                         "message_body": message_body, "message_html": message_html})
 
                 return True, "Success"
             else:
